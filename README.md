@@ -1,4 +1,4 @@
-# tinder-gold-free
+# Tinder Gold Free
 Show people who have liked you on tinder with 100% accuracy
 ## Installation
 * [Dowload this project](https://github.com/TVHH579/tinder-gold-free/releases/tag/v1.0) and unzip it
