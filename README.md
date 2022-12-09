@@ -13,6 +13,6 @@ Show all information of people like you on tinder
 ## Contact
 Trần Võ Hoàng Huy
 
-<a href="https://www.facebook.com/hoanghuydev" margin: 0px 10px><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" width="40" /></a>
+<a href="https://www.facebook.com/hoanghuydev" style="margin: 0px 10px;"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" width="40" /></a>
 <a href="https://zalo.me/0838463061" ><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" width="40" /></a>
-<a href="https://www.instagram.com/hoang_huy_0_1/" margin : 0px 10px><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" width="40" /></a>
+<a href="https://www.instagram.com/hoang_huy_0_1/" style="margin: 0px 10px;"><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" width="40" /></a>
