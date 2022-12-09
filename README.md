@@ -1,7 +1,7 @@
 # Tinder Gold Free
 Show people who have liked you on tinder with 100% accuracy
 ## Installation
-* [Dowload this project](https://github.com/TVHH579/tinder-gold-free/releases/tag/v1.0) and unzip it
+* [Dowload this project](https://github.com/TVHH579/tinder-gold-free/releases) and unzip it
 * Enable Chrome extensions developer mode
 * Click button `Download the unzipped extension`
 * Open [tinder.com](https://tinder.com/app/recs) and try it
@@ -13,6 +13,6 @@ Show all information of people like you on tinder
 ## Contact
 Trần Võ Hoàng Huy
 
-<a href="https://www.facebook.com/hoanghuydev"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" width="40" /></a>
-<a href="https://zalo.me/0838463061"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" width="40" /></a>
-<a href="https://www.instagram.com/hoang_huy_0_1/"><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" width="40" /></a>
+<a href="https://www.facebook.com/hoanghuydev" margin: 0px 10px><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" width="40" /></a>
+<a href="https://zalo.me/0838463061" ><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" width="40" /></a>
+<a href="https://www.instagram.com/hoang_huy_0_1/" margin : 0px 10px><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" width="40" /></a>
