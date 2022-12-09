@@ -1,7 +1,43 @@
+@keyframes fadeInZoom {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes fadeOutZoom {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to { 
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to { 
+        opacity: 1;
+    }
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to { 
+        opacity: 0;
+    }
+}
 .btn {
     color: black;
 }
-.btn {
+.btn-search {
 
     border-color: transparent;
     background: linear-gradient(45deg,#fd267a,#ff6036);
@@ -13,10 +49,76 @@
     top: 25px;
     bottom: 55px;
     right: 30px;
-    width: 340px;
+    width: 350px;
     background-color: white;
     box-shadow: 1px 2px 5px 1px #232222;
     overflow: auto;
+}
+.background-filter {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0, 0, 0.5);
+    z-index: 1000;
+}
+.backgr-filter-show {
+    display: flex;
+    animation: fadeIn .3s ease;
+}
+.backgr-filter-hide {
+    animation: fadeOut .3s ease;
+}
+
+.filter-table {
+    display: none;
+    margin: auto;
+    background: linear-gradient(45deg,#fd267a,#ff6036);
+    width: 80%;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    color: white;
+}
+.filter-show {
+    display: flex;
+    animation: fadeInZoom .3s ease;
+}
+.filter-hide {
+    animation: fadeOutZoom .3s ease;
+}
+.filter-title {
+    font-weight: bolder;
+    font-size: 30px;
+}
+.close-filter:hover {
+    cursor: pointer;
+}
+.separator {
+    width: 100%;
+    height: 0.5px;
+    background-color: rgba(0,0, 0, 0.5);
+    margin: 20px 0;
+}
+.filter-table > p{
+    margin: 0 auto 10px auto;
+    text-align: center;
+    color: black;
+}
+.filter-table > label {
+    border-radius: 10px;
+    width: fit-content;
+    padding: 5px;
+    background-color: rgba(0,0, 0, 0.5);
+    margin-bottom: 5px;
+}
+.filter-table > input {
+    border: none;
+    background-color: white;
+    outline: none;
+    color: black;
 }
 header {
     display: flex;
@@ -60,6 +162,7 @@ header {
 }
 .filter:hover {
     cursor: pointer;
+    opacity: 0.7;
 }
 .content {
     width: 96%;
@@ -74,11 +177,11 @@ header {
 .all-profile {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
      overflow: auto;
 }
 .profile {
-    margin-top: 20px;
+    margin-top: 30px;
     width: 155px;
     height: 240px;
     position: relative;
@@ -100,6 +203,24 @@ header {
     color: white;
     display: flex;
     flex-direction: column-reverse;
+}
+.pass-profile {
+    margin: 0;
+    position: absolute;
+    font-size: 15px;
+    width: 40px;
+    height: 40px;
+    top: -5px;
+    right: -5px;
+    text-align: center;
+    line-height: 40px;
+    background-color: red;
+    border-radius: 50%;
+    border: none;
+}
+.pass-profile:hover {
+    cursor: pointer;
+    background-color: rgb(230, 0, 0);
 }
 .profile > div {
     width: 145px;
