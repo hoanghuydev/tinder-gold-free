@@ -99,6 +99,7 @@ function addButtonTinderGF() {
                 <input type="number" class="num-of-people" placeholder="Enter number people to check">
                 <div class="btn-search btn">Search</div>
             </div>
+            <div class="btn btn-unblur">Unblur</div>
         </header>
         <img alt="Filter" class="filter"></img>
         <div class="searching"></div>
@@ -112,6 +113,10 @@ function addButtonTinderGF() {
     let backgroundFilter = document.querySelector('.background-filter')
     let imgURL = chrome.runtime.getURL("images/filter.png")
     let filter = document.querySelector(".filter")
+    let unblur = document.querySelector('.btn-unblur')
+    unblur.addEventListener('click',function(){
+        unblurTeasers()
+    })
     filter.src = imgURL
     filter.addEventListener('click',showFilterForm)
     document.querySelector('.close-filter').addEventListener('click',function() {
@@ -132,6 +137,24 @@ function addButtonTinderGF() {
         
     })
     document.querySelector('.btn-search').addEventListener("click", searchBtn)
+}
+async function unblurTeasers() {
+	const teasers = await fetch('https://api.gotinder.com/v2/fast-match/teasers', {
+		headers: {
+			'X-Auth-Token': localStorage.getItem('TinderWeb/APIToken'),
+			platform: 'android'
+		},
+	})
+		.then((res) => res.json())
+		.then((res) => res.data.results);
+	const teaserDivs = document.querySelectorAll('.Expand.enterAnimationContainer > div:nth-child(1)');
+
+	for (let i = 0; i < teaserDivs.length; ++i) {
+		const teaser = teasers[i];
+		const teaserDiv = teaserDivs[i];
+		const teaserImage = `https://preview.gotinder.com/${teaser.user._id}/original_${teaser.user.photos[0].id}.jpeg`;
+		teaserDiv.style.backgroundImage = `url(${teaserImage})`;
+	}
 }
 function filterProfile(name,year) {
     let arrProfileFilter = []

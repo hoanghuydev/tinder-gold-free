@@ -36,9 +36,6 @@
 }
 .btn {
     color: black;
-}
-.btn-search {
-
     border-color: transparent;
     background: linear-gradient(45deg,#fd267a,#ff6036);
     font-size: 14px;
@@ -130,7 +127,7 @@ header {
     padding: 5px;
     display: flex;
     justify-content: space-around;
-    width: 90%;
+    width: 80%;
     border: 0.5px solid #000000;
     border-radius: 13px;
     overflow: hidden;
@@ -151,7 +148,20 @@ header {
     text-align: center;
     margin: auto;
 }
+
 .btn-search:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+.btn-unblur {
+    margin: auto;
+    width: 15%;
+    height: 30px;
+    border-radius: 13px;
+    line-height: 28px;
+    text-align: center;
+}
+.btn-unblur:hover {
     cursor: pointer;
     opacity: 0.7;
 }
