@@ -51,8 +51,8 @@
     box-shadow: 1px 2px 5px 1px #232222;
     overflow: auto;
 }
-.background-filter {
-    display: none;
+.background-show {
+    display: flex;
     position: absolute;
     top: 0;
     left: 0;
@@ -60,6 +60,10 @@
     bottom: 0;
     background-color: rgba(0,0, 0, 0.5);
     z-index: 1000;
+}
+.background-filter {
+    display: none;
+
 }
 .backgr-filter-show {
     display: flex;
@@ -117,6 +121,45 @@
     outline: none;
     color: black;
 }
+.background-profile {
+
+}
+.backgr-profile-show {
+    display: flex;
+    animation: fadeIn .3s ease;
+}
+.backgr-profile-hide {
+    animation: fadeOut .3s ease;
+}
+.profile-table {
+    overflow: auto;
+    display: flex;
+    margin: auto;
+    width: 80%;
+    position: absolute;
+    top : 70px;
+    left: 50px;
+    right: 50px;
+    bottom: 70px;
+    background-color: white;
+    justify-content: center;
+    border-radius: 10px;
+}
+.profile-show {
+    display: flex;
+    animation: fadeInZoom .3s ease;
+}
+.profile-hide {
+    animation: fadeOutZoom .3s ease;
+}
+.img-profile {
+    margin: auto;
+    width: 90%;
+    height: 450px;
+    border-radius: 5px;
+    background-color: pink;
+}
+
 header {
     display: flex;
     height: 60px;
@@ -195,7 +238,7 @@ header {
     width: 155px;
     height: 240px;
     position: relative;
-    background-color: black;
+    background-color: pink;
     border-radius: 10px;
     background-size: cover;
 }
@@ -211,30 +254,44 @@ header {
 }
 .profile {
     color: white;
+    text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000,
+               1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
     display: flex;
     flex-direction: column-reverse;
 }
-.pass-profile {
-    margin: 0;
-    position: absolute;
+.profile > div {
+    width: 95%;
+    margin: 3px 3px 3px 5px;
+}
+.pass-like-profile {
+    display: flex;
+    width: 80%;
+    justify-content: center;
+}
+.pass-like-profile > p {
+    text-shadow: none;
+    margin: 0 10px;
     font-size: 15px;
-    width: 40px;
-    height: 40px;
-    top: -5px;
-    right: -5px;
+    width: 30px;
+    height: 30px;
     text-align: center;
-    line-height: 40px;
-    background-color: red;
+    line-height: 30px;
     border-radius: 50%;
     border: none;
+}
+.pass-profile {
+    background-color: red;
 }
 .pass-profile:hover {
     cursor: pointer;
     background-color: rgb(230, 0, 0);
 }
-.profile > div {
-    width: 145px;
-    margin: 3px 3px 3px 5px;
+.like-profile {
+    background-color: rgb(48, 230, 48);
+}
+.like-profile:hover {
+    cursor: pointer;
+    background-color: rgb(48, 200, 48);
 }
 .user {
     display: flex;
@@ -243,6 +300,11 @@ header {
     font-size: 16px;
     font-weight: bold;
     padding-right: 10px;
+}
+.user-name:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: red;
 }
 .user-birthday {
     font-size: 12px ;

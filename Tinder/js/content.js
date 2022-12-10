@@ -22,18 +22,29 @@ function addProfile(objectProfile) {
     let distance = parseInt(objectProfile.distance) * 1.6
     let profileLikeYou = `
     <div class="profile id${objectProfile.userID}">
-        <p class="pass-profile pass-${objectProfile.userID}">X</p>
+        <div class="pass-like-profile">
+            <p class="pass-profile pass-${objectProfile.userID}">✖</p>
+            <p class="like-profile like-${objectProfile.userID}">❤</p>
+        </div>
         <div class="distance-mi">${distance} kilometers</div>
         <div class="user-bio">${objectProfile.userBio}</div>
         <div class="user">
-            <div class="user-name">${objectProfile.userName}</div>
+            <div class="user-name user-name-of-${objectProfile.userID}" title="Open ${objectProfile.photos.length} tab image of ${objectProfile.userName}">${objectProfile.userName}</div>
             <div class="user-birthday">${objectProfile.birthDay}</div>
         </div>
     </div>
     `
     document.querySelector('.all-profile').appendChild(new DOMParser().parseFromString(profileLikeYou, 'text/html').body.firstElementChild)
     document.querySelector(`.pass-${objectProfile.userID}`).addEventListener('click', function () {
-        passProfileButton(objectProfile.userID, objectProfile.sNumber)
+        passProfileButton(objectProfile.userID)
+    })
+    document.querySelector(`.like-${objectProfile.userID}`).addEventListener('click', function () {
+        likeProfileButton(objectProfile.userID)
+    })
+    document.querySelector(`.user-name-of-${objectProfile.userID}`).addEventListener('click', function(){
+        objectProfile.photos.forEach(element => {
+            window.open(element.url)
+        });
     })
     document.querySelector(`.id${objectProfile.userID}`).style.backgroundImage = `url(${objectProfile.avatarURL})`
     document.querySelector('.profile').addEventListener('click', showImage(objectProfile.photos))
@@ -43,11 +54,14 @@ function addArrProfile(arrProfile) {
         let distance = parseInt(arrProfile[i].distance) * 1.6
         let profileLikeYou = `
         <div class="profile id${arrProfile[i].userID}">
-            <p class="pass-profile pass-${arrProfile[i].userID}">X</p>
+            <div class="pass-like-profile">
+                <p class="pass-profile pass-${arrProfile[i].userID}">✖</p>
+                <p class="like-profile like-${arrProfile[i].userID}">❤</p>
+            </div>
             <div class="distance-mi">${distance} kilometers</div>
             <div class="user-bio">${arrProfile[i].userBio}</div>
             <div class="user">
-                <div class="user-name">${arrProfile[i].userName}</div>
+                <div class="user-name user-name-of-${arrProfile[i].userID}" title="Open ${arrProfile[i].photos.length} tab image of ${arrProfile[i].userName}">${arrProfile[i].userName}</div>
                 <div class="user-birthday">${arrProfile[i].birthDay}</div>
             </div>
         </div>
@@ -55,14 +69,22 @@ function addArrProfile(arrProfile) {
 
         document.querySelector('.all-profile').appendChild(new DOMParser().parseFromString(profileLikeYou, 'text/html').body.firstElementChild)
         document.querySelector(`.pass-${arrProfile[i].userID}`).addEventListener('click', function () {
-            passProfileButton(arrProfile[i].userID, arrProfile[i].sNumber)
+            passProfileButton(arrProfile[i].userID)
+        })
+        document.querySelector(`.like-${arrProfile[i].userID}`).addEventListener('click', function () {
+            likeProfileButton(arrProfile[i].userID)
+        })
+        document.querySelector(`.user-name-of-${arrProfile[i].userID}`).addEventListener('click', function(){
+            arrProfile[i].photos.forEach(element => {
+                window.open(element.url)
+            });
         })
         document.querySelector(`.id${arrProfile[i].userID}`).style.backgroundImage = `url(${arrProfile[i].avatarURL})`
         document.querySelector('.profile').addEventListener('click', showImage(arrProfile[i].photos))
     }
 }
-async function passProfileButton(userID, sNumber) {
-    const generate = await fetch(`https://api.gotinder.com/pass/${userID}?locale=en&s_number=${sNumber}`, {
+async function passProfileButton(userID) {
+    const passProfile = await fetch(`https://api.gotinder.com/pass/${userID}`, {
         headers: {
             'X-Auth-Token': localStorage.getItem('TinderWeb/APIToken'),
             platform: 'android'
@@ -77,6 +99,23 @@ async function passProfileButton(userID, sNumber) {
         }
     }
     document.querySelector('.searching').innerText = '   ' + arrProfile.length + ' users'
+}
+async function likeProfileButton(userID) {
+    const likeProfile = await fetch(`https://api.gotinder.com/like/${userID}`, {
+		headers: {
+			'X-Auth-Token': localStorage.getItem('TinderWeb/APIToken'),
+			platform: 'android'
+		},
+	})
+		.then((res) => res.json())
+        for (let i = 0; i < arrProfile.length; i++) {
+            if (arrProfile[i].userID == userID) {
+                document.querySelector(`.id${arrProfile[i].userID}`).remove()
+                arrProfile.splice(i, 1);
+                localStorage.setItem("arrProfile", JSON.stringify(arrProfile));
+            }
+        }
+        document.querySelector('.searching').innerText = '   ' + arrProfile.length + ' users'
 }
 function addButtonTinderGF() {
     let buttonTinderGF = `
@@ -96,7 +135,7 @@ function addButtonTinderGF() {
     </div>
         <header>
             <div class="search">
-                <input type="number" class="num-of-people" placeholder="Enter number people to check">
+                <input type="number" class="num-of-people" placeholder='Enter num beetween 1-20'>
                 <div class="btn-search btn">Search</div>
             </div>
             <div class="btn btn-unblur">Unblur</div>
@@ -114,6 +153,18 @@ function addButtonTinderGF() {
     let imgURL = chrome.runtime.getURL("images/filter.png")
     let filter = document.querySelector(".filter")
     let unblur = document.querySelector('.btn-unblur')
+    let inputNumber = document.querySelector('.num-of-people')
+    inputNumber.addEventListener('keydown',function(e) {
+        document.querySelector('.search').style.border = '0.5px solid black'
+        if (e.keyCode == 13) {
+            if (inputNumber.value>20||inputNumber.value<1) {
+                document.querySelector('.search').style.border = '2.5px solid red'
+                inputNumber.value=''
+            } else {
+                searchBtn()
+            }
+        }
+    })
     unblur.addEventListener('click',function(){
         unblurTeasers()
     })
@@ -136,7 +187,14 @@ function addButtonTinderGF() {
         }
         
     })
-    document.querySelector('.btn-search').addEventListener("click", searchBtn)
+    document.querySelector('.btn-search').addEventListener("click", function() {
+        if (inputNumber.value>20||inputNumber.value<1) {
+            document.querySelector('.search').style.border = '0.5px solid red'
+            inputNumber.value=''
+        } else {
+            searchBtn()
+        }
+    })
 }
 async function unblurTeasers() {
 	const teasers = await fetch('https://api.gotinder.com/v2/fast-match/teasers', {
@@ -238,8 +296,8 @@ function searchBtn() {
                 birthDay: userLikeU[1].user.birth_date.slice(0, 4),
                 userBio: userLikeU[1].user.bio,
                 distance: userLikeU[1].distance_mi,
-                // userInterests :  interests,
-                // photos : userLikeU[1].user.photos,
+                userInterests :  interests,
+                photos : userLikeU[1].user.photos,
                 avatarURL: userLikeU[1].user.photos[0].url,
                 userID: userLikeU[1].user._id,
             }
