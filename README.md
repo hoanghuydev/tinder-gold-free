@@ -7,10 +7,15 @@ Show people who have liked you on tinder with 100% accuracy
 * Open [tinder.com](https://tinder.com/app/recs) and try it
 ## Usage 
 Enter the number of people (between 1-20) to check and click `Search`. Wait for searching and see the result
+
 Click ![filter](https://upload.wikimedia.org/wikipedia/commons/a/a7/Toicon-icon-lines-and-angles-filter.svg "Filter icon") icon to filter name and year of birth
+
 Click user name to open all tag of user image
+
 Click `X` to skip user
+
 Click `❤` to like user
+
 <b>If user in extension dont match so your account has no likes ( maybe you have passed or liked all the people in `likes you` list )</b>
 ## Features
 - Show all information of people like you on tinder
