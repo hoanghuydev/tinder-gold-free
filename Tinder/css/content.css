@@ -67,6 +67,7 @@
 }
 .container {
     position: fixed;
+    display: block;
     top : 10px;
     right: 20px;
     width: 350px;
@@ -82,7 +83,9 @@
     animation: fadeOutZoom ease-in 0.3s;
     opacity: 0;
     transform: 0;
-    
+}
+.display-none {
+    display: none;
 }
 .background-show {
     display: flex;
@@ -409,7 +412,7 @@ header {
     width: fit-content;
     border: 0.5px solid #000;
     padding: 7px;
-    border-radius: 15px;
+    border-radius: 20px;
     margin: 10px;
 }
 .pass-like-profile.of-profile-show {
