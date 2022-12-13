@@ -38,6 +38,7 @@
         {
           "resources": ["images/filter.png","images/infor-icon.jpg" ],
           "matches": [ "https://tinder.com/*" ]
-        }]
+        }
+      ]
 
   }
