@@ -2,6 +2,8 @@ let arrProfile = []
 let slideIndex = 1
 let n = 1
 let indexImg = 1
+let isSearch = true
+let userUnlimitedLike = []
 try {
     arrProfile = JSON.parse(localStorage.getItem("arrProfile") || "[]")
 
@@ -11,7 +13,7 @@ try {
 addButtonTinderGF()
 createArrProfile()
 function updateUserCount() {
-    document.querySelector('.searching').innerText = '   ' + arrProfile.length + ' users'
+    document.querySelector('.searching').innerText = 'Founded : \n' + arrProfile.length + ' users'
 }
 function createArrProfile() {
     if (!(arrProfile.length == 0)) {
@@ -40,15 +42,23 @@ function addProfile(objectProfile) {
     </div>
     `
     document.querySelector('.all-profile').appendChild(new DOMParser().parseFromString(profileLikeYou, 'text/html').body.firstElementChild)
-    document.querySelector(`.pass-${objectProfile.userID}`).addEventListener('click', function () {
-        passProfileButton(objectProfile.userID)
+    document.querySelector(`.pass-${objectProfile.userID}`).addEventListener('click', async function () {
+        await passProfileButton(objectProfile.userID)
         removeAllProfile()
-        addArrProfile(arrProfile)
+        if (isSearch) {
+            addArrProfile(arrProfile)
+        } else {
+            addArrProfile(userUnlimitedLike)
+        }
     })
-    document.querySelector(`.like-${objectProfile.userID}`).addEventListener('click', function () {
-        likeProfileButton(objectProfile.userID)
+    document.querySelector(`.like-${objectProfile.userID}`).addEventListener('click', async function () {
+        await likeProfileButton(objectProfile.userID)
         removeAllProfile()
-        addArrProfile(arrProfile)
+        if (isSearch) {
+            addArrProfile(arrProfile)
+        } else {
+            addArrProfile(userUnlimitedLike)
+        }
     })
     document.querySelector(`.user-name-of-${objectProfile.userID}`).addEventListener('click', function () {
         removeAllProfile()
@@ -80,19 +90,31 @@ function addArrProfile(arrProfile) {
         document.querySelector(`.id${arrProfile[i].userID}`).style.backgroundImage = `url(${arrProfile[i].avatarURL})`
         document.querySelector(`.user-name-of-${arrProfile[i].userID}`).addEventListener('click', function () {
             removeAllProfile()
-            showProfile(arrProfile[i].userID)
+            if (isSearch) {
+                showProfile(arrProfile[i].userID)
+            } else {
+                showProfile(userUnlimitedLike[i].userID)
+            }
         })
         document.querySelector('.profile').addEventListener('click', showImage(arrProfile[i].photos))
         updateNumOfPeopleInput()
         document.querySelector(`.pass-${arrProfile[i].userID}`).addEventListener('click',async function () {
             await passProfileButton(arrProfile[i].userID)
             removeAllProfile()
-            addArrProfile(arrProfile)
+            if (isSearch) {
+                addArrProfile(arrProfile)
+            } else {
+                addArrProfile(userUnlimitedLike)
+            }
         })
         document.querySelector(`.like-${arrProfile[i].userID}`).addEventListener('click', async function () {
             await likeProfileButton(arrProfile[i].userID)
             removeAllProfile()
-            addArrProfile(arrProfile)
+            if (isSearch) {
+                addArrProfile(arrProfile)
+            } else {
+                addArrProfile(userUnlimitedLike)
+            }
         })
        
     }
@@ -111,14 +133,23 @@ async function passProfileButton(userID) {
         },
     })
         .then((res) => res.json())
-    for (let i = 0; i < arrProfile.length; i++) {
-        if (arrProfile[i].userID == userID) {
-            arrProfile.splice(i, 1);
-            localStorage.setItem("arrProfile", JSON.stringify(arrProfile))
+    if (isSearch) {
+        for (let i = 0; i < arrProfile.length; i++) {
+            if (arrProfile[i].userID == userID) {
+                arrProfile.splice(i, 1);
+                localStorage.setItem("arrProfile", JSON.stringify(arrProfile))
+            }
+        }
+        updateUserCount()
+        updateNumOfPeopleInput()
+    } else {
+        for (let i = 0; i < userUnlimitedLike.length; i++) {
+            if (userUnlimitedLike[i].userID == userID) {
+                userUnlimitedLike.splice(i, 1);
+            }
         }
     }
-    updateUserCount()
-    updateNumOfPeopleInput()
+    
 }
 async function likeProfileButton(userID) {
     const likeProfile = await fetch(`https://api.gotinder.com/like/${userID}`, {
@@ -128,27 +159,36 @@ async function likeProfileButton(userID) {
         },
     })
         .then((res) => res.json())
-    for (let i = 0; i < arrProfile.length; i++) {
-        if (arrProfile[i].userID == userID) {
-            arrProfile.splice(i, 1);
-            localStorage.setItem("arrProfile", JSON.stringify(arrProfile));
+    if (isSearch) {
+        for (let i = 0; i < arrProfile.length; i++) {
+            if (arrProfile[i].userID == userID) {
+                arrProfile.splice(i, 1);
+                localStorage.setItem("arrProfile", JSON.stringify(arrProfile));
+            }
+        }
+        updateUserCount()
+        updateNumOfPeopleInput()
+    } else {
+        for (let i = 0; i < userUnlimitedLike.length; i++) {
+            if (userUnlimitedLike[i].userID == userID) {
+                userUnlimitedLike.splice(i, 1);
+            }
         }
     }
-    updateUserCount()
-    updateNumOfPeopleInput()
 }
 function updateNumOfPeopleInput() {
     document.querySelector('.num-of-people').placeholder = `Enter num between ${arrProfile.length+1}-20`
 }
-function showProfile(userID) {
+function showProfileIsSearch(userID,listProfile) {
     slideIndex = 1
     let indexOfProfile = 0
-    for (let i = 0; i < arrProfile.length; i++) {
-        if (arrProfile[i].userID == userID) {
+
+    for (let i = 0; i < listProfile.length; i++) {
+        if (listProfile[i].userID == userID) {
             indexOfProfile = i
         }
     }
-    let distance = parseInt(arrProfile[indexOfProfile].distance) * 1.6
+    let distance = parseInt(listProfile[indexOfProfile].distance) * 1.6
     distance = Math.round(distance*100)/100
     let profileString = `
     <div class="profile-info">
@@ -162,29 +202,29 @@ function showProfile(userID) {
     <div class="profile__text">
         <div class="profile__btn-hide">&#8744;</div>
         <div class="profile__user">
-        <div class="profile__user-name">${arrProfile[indexOfProfile].userName}</div>
-        <div class="profile__user-birthday">${arrProfile[indexOfProfile].birthDay}</div>
+        <div class="profile__user-name">${listProfile[indexOfProfile].userName}</div>
+        <div class="profile__user-birthday">${listProfile[indexOfProfile].birthDay}</div>
         </div>
         <div class="profile__user-dis">${distance} kilometers</div>
         <div class="separator"></div>
-        <div class="profile__user-bio">${arrProfile[indexOfProfile].userBio}</div>
+        <div class="profile__user-bio">${listProfile[indexOfProfile].userBio}</div>
         <div class="interests">
         </div>
         <div class="separator"></div>
         <div class="pass-like-profile of-profile-show">
-                            <p class="pass-profile of-profile-show pass-${arrProfile[indexOfProfile].userID}">✖</p>
-                            <p class="like-profile of-profile-show like-${arrProfile[indexOfProfile].userID}">❤</p>
+                            <p class="pass-profile of-profile-show pass-${listProfile[indexOfProfile].userID}">✖</p>
+                            <p class="like-profile of-profile-show like-${listProfile[indexOfProfile].userID}">❤</p>
         </div>
     </div>
     </div>
     `
     document.querySelector('.all-profile').appendChild(new DOMParser().parseFromString(profileString, 'text/html').body.firstElementChild)
-    arrProfile[indexOfProfile].photos.forEach(photo => {
+    listProfile[indexOfProfile].photos.forEach(photo => {
         document.querySelector('.rectangle__silde-count').innerHTML += `<div class="rectangle"></div>`
         document.querySelector('.profile__img--slide').innerHTML += `<img class="slide-img" src="${photo.url}"></img>`
     })
-    if (!arrProfile[indexOfProfile].userInterests=="") {
-        arrProfile[indexOfProfile].userInterests.forEach(element => {
+    if (!listProfile[indexOfProfile].userInterests=="") {
+        listProfile[indexOfProfile].userInterests.forEach(element => {
             document.querySelector('.interests').innerHTML+=`<div class="interest__item">${element.name}</div>`
         })
     }
@@ -198,21 +238,32 @@ function showProfile(userID) {
     let next = document.querySelector('.next')
     prev.addEventListener('click',function() {plusSlides(-1)})
     next.addEventListener('click', function() {plusSlides(1)})
-    document.querySelector(`.pass-${arrProfile[indexOfProfile].userID}`).addEventListener('click', async function () {
-        await passProfileButton(arrProfile[indexOfProfile].userID)
+    document.querySelector(`.pass-${listProfile[indexOfProfile].userID}`).addEventListener('click', async function () {
+        await passProfileButton(listProfile[indexOfProfile].userID)
         hideProfile()
     })
-    document.querySelector(`.like-${arrProfile[indexOfProfile].userID}`).addEventListener('click', async function () {
-        await likeProfileButton(arrProfile[indexOfProfile].userID)
+    document.querySelector(`.like-${listProfile[indexOfProfile].userID}`).addEventListener('click', async function () {
+        await likeProfileButton(listProfile[indexOfProfile].userID)
         setTimeout(hideProfile(),1000)
     })
     document.querySelector('.profile__btn-hide').addEventListener('click',function() {hideProfile()})
     showSlides(slideIndex)
 }
+function showProfile(userID) {
+    if (isSearch) {
+        showProfileIsSearch(userID,arrProfile)       
+    } else {
+        showProfileIsSearch(userID,userUnlimitedLike)
+    }
+}
 function hideProfile() {
-    document.querySelector('.profile-info').remove()
-    addArrProfile(arrProfile)
-    
+    if (isSearch) {
+        document.querySelector('.profile-info').remove()
+        addArrProfile(arrProfile)
+    } else {
+        document.querySelector('.profile-info').remove()
+        addArrProfile(userUnlimitedLike)
+    }
     
 }
 function plusSlides(n) {
@@ -269,6 +320,7 @@ function addButtonTinderGF() {
                 <div class="btn-search btn">Search</div>
             </div>
             <div class="btn btn-unblur">Unblur</div>
+            <div class="btn btn-unlimited-like">∞ Like</div>
         </header>
         <img alt="Filter" class="filter"></img>
         <div class="searching"></div>
@@ -289,6 +341,7 @@ function addButtonTinderGF() {
     let filter = document.querySelector(".filter")
     let unblur = document.querySelector('.btn-unblur')
     let inputNumber = document.querySelector('.num-of-people')
+    let bntUnlimitedLike = document.querySelector('.btn-unlimited-like')
     btnTinderGF.addEventListener('click',function() {
         container.classList.toggle('hide')
         setTimeout(function() {
@@ -298,7 +351,16 @@ function addButtonTinderGF() {
     inputNumber.addEventListener('keydown', function (e) {
         document.querySelector('.search').style.border = '0.5px solid black'
         if (e.keyCode == 13) {
-            if (inputNumber.value > 20 || inputNumber.value < arrProfile.length+1) {
+            if (inputNumber.value==0) {
+                document.querySelector('.searching').innerText = 'Founded : \n' + arrProfile.length + ' users'
+                removeAllProfile()
+                try {
+                    hideProfile()
+                } catch (error) {
+                    
+                }
+                addArrProfile(arrProfile)
+            } else if (inputNumber.value > 20 || inputNumber.value < arrProfile.length+1) {
                 document.querySelector('.search').style.border = '2.5px solid red'
                 inputNumber.value = ''
             } else {
@@ -308,6 +370,14 @@ function addButtonTinderGF() {
     })
     unblur.addEventListener('click', function () {
         unblurTeasers()
+    })
+    bntUnlimitedLike.addEventListener('click',function() {
+        try {
+            hideProfile()
+        } catch (error) {
+            
+        }
+        unlimitedLike()
     })
     filter.src = imgURL
     filter.addEventListener('click', showFilterForm)
@@ -325,8 +395,17 @@ function addButtonTinderGF() {
 
     })
     document.querySelector('.btn-search').addEventListener("click", function () {
-        if (inputNumber.value > 20 || inputNumber.value < 1) {
-            document.querySelector('.search').style.border = '0.5px solid red'
+        if (inputNumber.value==0) {
+            document.querySelector('.searching').innerText = 'Founded : \n' + arrProfile.length + ' users'
+            removeAllProfile()
+            try {
+                hideProfile()
+            } catch (error) {
+                
+            }
+            addArrProfile(arrProfile)
+        } else if (inputNumber.value > 20 || inputNumber.value < arrProfile.length+1) {
+            document.querySelector('.search').style.border = '2.5px solid red'
             inputNumber.value = ''
         } else {
             searchBtn()
@@ -383,6 +462,53 @@ function filterProfile(name, year) {
             break;
     }
 }
+async function unlimitedLike() {
+    
+    isSearch = false
+    removeAllProfile()
+    document.querySelector('.searching').innerText = 'Unlimited Like User'
+    const userLikeU = await fetch('https://api.gotinder.com/v2/recs/core', {
+        headers: {
+            'X-Auth-Token': localStorage.getItem('TinderWeb/APIToken'),
+            platform: 'android'
+        },
+    })
+        .then((res) => res.json())
+        .then((res) => res.data.results);
+    for (let i=0; i<userLikeU.length;i++) {
+        if (typeof userLikeU[i].experiment_info == 'undefined') {
+            var interests = ''
+        } else {
+            interests = userLikeU[i].experiment_info.user_interests.selected_interests
+        }
+        let birthDayUser
+        let distanceUser
+        try {
+            birthDayUser = userLikeU[i].user.birth_date.slice(0, 4)
+        } catch (error) {
+            birthDayUser = ''
+        }
+        try {
+            distanceUser = userLikeU[i].distance_mi
+        } catch (error) {
+            distanceUser = '0'
+        }
+        let objectProfile = {
+            sNumber: userLikeU[i].s_number,
+            userName: userLikeU[i].user.name,
+            birthDay: birthDayUser,
+            userBio: userLikeU[i].user.bio,
+            distance: distanceUser,
+            userInterests: interests,
+            photos: userLikeU[i].user.photos,
+            avatarURL: userLikeU[i].user.photos[0].url,
+            userID: userLikeU[i].user._id,
+        }
+        userUnlimitedLike.push(objectProfile)
+        addProfile(objectProfile)
+    
+    }
+}
 function showFilterForm() {
     let backgroundFilter = document.querySelector('.background-filter')
     let filterTable = document.querySelector('.filter-table')
@@ -406,6 +532,7 @@ function showFilterForm() {
     }
 }
 function searchBtn() {
+    isSearch = true
     removeAllProfile()
     let num = document.querySelector('.num-of-people').value
     localStorage.setItem('num', num);
@@ -427,12 +554,24 @@ function searchBtn() {
             } else {
                 interests = userLikeU[1].experiment_info.user_interests.selected_interests
             }
+            let birthDayUser
+            let distanceUser
+            try {
+                birthDayUser = userLikeU[1].user.birth_date.slice(0, 4)
+            } catch (error) {
+                birthDayUser = ''
+            }
+            try {
+                distanceUser = userLikeU[1].distance_mi
+            } catch (error) {
+                distanceUser = '0'
+            }
             let objectProfile = {
                 sNumber: userLikeU[1].s_number,
                 userName: userLikeU[1].user.name,
-                birthDay: userLikeU[1].user.birth_date.slice(0, 4),
+                birthDay: birthDayUser,
                 userBio: userLikeU[1].user.bio,
-                distance: userLikeU[1].distance_mi,
+                distance: distanceUser,
                 userInterests: interests,
                 photos: userLikeU[1].user.photos,
                 avatarURL: userLikeU[1].user.photos[0].url,
@@ -442,7 +581,6 @@ function searchBtn() {
             let loopNum
             loopNum = (num==1)? (arrProfile.length+1) : (arrProfile.length) 
             for (let i = 0; i < loopNum; i++) {
-                console.log('run');
                 try {
                     if (arrProfile[i].userID == objectProfile.userID) {
                         countLoop++
@@ -458,7 +596,6 @@ function searchBtn() {
             }
             if (!hasContain) {
                 arrProfile.push(objectProfile)
-                console.log(arrProfile);
             }
             if (countLoop == 18) {
                 localStorage.setItem("arrProfile", JSON.stringify(arrProfile));
