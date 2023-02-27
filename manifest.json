@@ -1,0 +1,44 @@
+{
+    "manifest_version": 3,
+    "name": "TinderGF",
+    "version": "1.0",
+    "description": "Show people who have liked you on tinder with 100% accuracy",
+    "icons": {
+        "16": "images/icon-16.jpg",
+        "32": "images/icon-32.jpg",
+        "48": "images/icon-48.jpg",
+        "128": "images/icon-128.jpg"
+      },
+
+      "content_scripts": [
+        {
+          "matches": [
+            "https://tinder.com/*"
+          ],
+          "js": ["js/content.js"],
+          "css": ["css/content.css"]
+        }
+      ],
+      "background": {
+        "service_worker": "js/background.js"
+      },
+      "action": {
+
+        "default_icon": "images/icon-16.jpg"
+      },
+      "commands": {
+        "_execute_action": {
+          "suggested_key": {
+            "default": "Ctrl+Shift+T",
+            "mac": "Command+Shift+T"
+          }
+        }
+      },
+      "web_accessible_resources": [
+        {
+          "resources": ["images/filter.png","images/infor-icon.jpg" ],
+          "matches": [ "https://tinder.com/*" ]
+        }
+      ]
+
+  }

@@ -1,0 +1,463 @@
+@keyframes zoom {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.15);
+    }
+}
+
+@keyframes fadeInZoom {
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeOutZoom {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.btn {
+    color: black;
+    border-color: transparent;
+    background: linear-gradient(45deg, #fd267a, #ff6036);
+    font-size: 14px;
+    color: rgb(241, 233, 233);
+}
+
+.btn-tinder-gf {
+    position: fixed;
+    right: 20px;
+    bottom: 10px;
+    width: 130px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 1.2px 3px 0px #232222;
+}
+
+.btn-tinder-gf:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.container-GF {
+    position: fixed;
+    display: block;
+    top: 2%;
+    right: 20px;
+    width: 350px;
+    height: 90%;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 1px 2px 5px 1px #232222;
+    overflow: auto;
+    animation: fadeInZoom 0.3s ease-in;
+    transform-origin: bottom right;
+    color: black;
+}
+
+.container-GF.hide {
+    transform-origin: bottom right;
+    animation: fadeOutZoom ease-in 0.3s;
+    opacity: 0;
+    transform: 0;
+}
+
+.home {
+    display: flex;
+    height: 100%;
+    margin: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+
+}
+
+.btn-home {
+    margin: 20px auto;
+    border-radius: 10px;
+    width: 80%;
+    text-align: center;
+    line-height: 40px;
+    height: 40px;
+    box-shadow: 0.3px 0.3px 5px 1px #232222;
+}
+
+.btn-home:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.display-none {
+    display: none;
+}
+
+.rewind {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.non-user-passed {
+    font-size: 20px;
+    font-weight: bold;
+    margin: auto;
+    padding: 10px;
+}
+
+.back-to-home {
+    padding: 5px;
+    font-size: 16px;
+}
+
+.back-to-home:hover {
+
+    cursor: pointer;
+    opacity: 0.9;
+    color: #ff6036;
+
+}
+
+.profile-info {
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0.3px 0.3px 3px 0px #232222;
+    border-radius: 10px;
+    animation: fadeIn .35s ease-in;
+}
+
+.profile__img--slide {
+    position: relative;
+    /* display: none; */
+    width: 100%;
+    height: 450px;
+}
+
+.slide-img {
+    width: 100%;
+    height: 100%;
+    animation: fadeIn 0.2s ease-in;
+}
+
+.rectangle__silde-count {
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    right: 5px;
+    display: flex;
+}
+
+.rectangle {
+    flex: 1;
+    height: 4px;
+    background-color: rgb(101, 101, 101);
+    border-radius: 2px;
+    margin: 3px;
+}
+
+.active,
+.rectangle:hover {
+    background-color: white;
+    cursor: pointer;
+}
+
+.next,
+.prev {
+    width: 40px;
+    height: 380px;
+    line-height: 380px;
+    top: 20px;
+    text-align: center;
+    font-size: 25px;
+    position: absolute;
+    color: white;
+}
+
+.prev {
+    left: 0px;
+}
+
+.next {
+    right: 0px;
+}
+
+.next:hover,
+.prev:hover {
+    cursor: pointer;
+}
+
+.profile__text {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.profile__btn-hide {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: -25px;
+    right: 30px;
+    background: linear-gradient(45deg, #fd267a, #ff6036);
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    transform: scale(1);
+}
+
+.profile__btn-hide:hover {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    transform: scale(1.12);
+}
+
+.profile__user {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile__user-name {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.profile__user-birthday {
+    margin: 10px;
+    font-size: 16px;
+
+}
+
+.profile__user-dis {
+    margin-left: 10px;
+    text-align: left;
+}
+
+.profile__user-bio {
+    margin: 0 10px;
+    text-align: left;
+    font-size: 17px;
+}
+
+.interrst-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.interests {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 80px;
+}
+
+.interest__item {
+    width: fit-content;
+    border: 0.5px solid #000;
+    padding: 7px;
+    border-radius: 20px;
+    margin: 10px;
+}
+
+.separator {
+    width: 100%;
+    height: 0.7px;
+    background-color: black;
+    opacity: 0.9;
+    margin: 7px auto;
+}
+
+.pass-like-profile {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    position: fixed;
+    right: 20px;
+    width: 350px;
+    bottom: 8%;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+
+}
+
+.pass-like-profile>p {
+    text-shadow: none;
+    margin: 0 10px;
+    font-size: 15px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    border: none;
+}
+
+.pass-profile.of-profile-show,
+.like-profile.of-profile-show {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    font-size: 50px;
+}
+
+.pass-profile:hover,
+.like-profile:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.auto-like {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.liked-text {
+    margin: 0 auto;
+}
+
+.btn-stop-auto {
+    border-radius: 30px;
+    font-size: 17px;
+    width: fit-content;
+    padding: 5px 40px;
+    margin: 15px auto;
+}
+
+@media screen and (max-width :380px) {
+    .container-GF {
+        width: 90%;
+    }
+
+}
+
+/* loader css */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: #c5cae9;
+}
+
+.box-loader {
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.container-loader {
+    height: 15px;
+    width: 105px;
+    display: flex;
+    position: relative;
+}
+
+.circle-loader {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #000;
+    animation: move 500ms linear 0ms infinite;
+    margin-right: 30px;
+}
+
+.circle-loader:first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: grow 500ms linear 0ms infinite;
+}
+
+.circle-loader:last-child {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 0;
+    animation: grow 500ms linear 0s infinite reverse;
+}
+
+@keyframes grow {
+    from {
+        transform: scale(0, 0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1, 1);
+        opacity: 1;
+    }
+}
+
+@keyframes move {
+    from {
+        transform: translateX(0px)
+    }
+
+    to {
+        transform: translateX(45px)
+    }
+}
